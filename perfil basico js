@@ -1,0 +1,33 @@
+function createUser(event) {
+  event.preventDefault();
+  
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  
+  fetch('/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      password: password
+    })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error al crear usuario');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Usuario creado exitosamente:', data);
+    // Aquí puedes redirigir al usuario a la página de perfil o mostrar un mensaje de éxito
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Aquí puedes mostrar un mensaje de error al usuario
+  });
+}
